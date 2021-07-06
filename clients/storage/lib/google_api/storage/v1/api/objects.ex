@@ -47,7 +47,7 @@ defmodule GoogleApi.Storage.V1.Api.Objects do
       *   `:kmsKeyName` (*type:* `String.t`) - Resource name of the Cloud KMS key, of the form projects/my-project/locations/global/keyRings/my-kr/cryptoKeys/my-key, that will be used to encrypt the object. Overrides the object metadata's kms_key_name value, if any.
       *   `:provisionalUserProject` (*type:* `String.t`) - The project to be billed for this request if the target bucket is requester-pays bucket.
       *   `:userProject` (*type:* `String.t`) - The project to be billed for this request. Required for Requester Pays buckets.
-      *   `:body` (*type:* `GoogleApi.Storage.V1.Model.ComposeRequest.t`) - 
+      *   `:body` (*type:* `GoogleApi.Storage.V1.Model.ComposeRequest.t`) -
   *   `opts` (*type:* `keyword()`) - Call options
 
   ## Returns
@@ -131,7 +131,7 @@ defmodule GoogleApi.Storage.V1.Api.Objects do
       *   `:provisionalUserProject` (*type:* `String.t`) - The project to be billed for this request if the target bucket is requester-pays bucket.
       *   `:sourceGeneration` (*type:* `String.t`) - If present, selects a specific revision of the source object (as opposed to the latest version, the default).
       *   `:userProject` (*type:* `String.t`) - The project to be billed for this request. Required for Requester Pays buckets.
-      *   `:body` (*type:* `GoogleApi.Storage.V1.Model.Object.t`) - 
+      *   `:body` (*type:* `GoogleApi.Storage.V1.Model.Object.t`) -
   *   `opts` (*type:* `keyword()`) - Call options
 
   ## Returns
@@ -193,7 +193,7 @@ defmodule GoogleApi.Storage.V1.Api.Objects do
         "/storage/v1/b/{sourceBucket}/o/{sourceObject}/copyTo/b/{destinationBucket}/o/{destinationObject}",
         %{
           "sourceBucket" => URI.encode(source_bucket, &URI.char_unreserved?/1),
-          "sourceObject" => URI.encode(source_object, &URI.char_unreserved?/1),
+          "sourceObject" => URI.encode(source_object, &(URI.char_unreserved?(&1) || &1 == ?/)),
           "destinationBucket" => URI.encode(destination_bucket, &URI.char_unreserved?/1),
           "destinationObject" =>
             URI.encode(destination_object, &(URI.char_unreserved?(&1) || &1 == ?/))
@@ -262,7 +262,7 @@ defmodule GoogleApi.Storage.V1.Api.Objects do
       |> Request.method(:delete)
       |> Request.url("/storage/v1/b/{bucket}/o/{object}", %{
         "bucket" => URI.encode(bucket, &URI.char_unreserved?/1),
-        "object" => URI.encode(object, &URI.char_unreserved?/1)
+        "object" => URI.encode(object, &(URI.char_unreserved?(&1) || &1 == ?/))
       })
       |> Request.add_optional_params(optional_params_config, optional_params)
       |> Request.library_version(@library_version)
@@ -337,7 +337,7 @@ defmodule GoogleApi.Storage.V1.Api.Objects do
       |> Request.method(:get)
       |> Request.url("/storage/v1/b/{bucket}/o/{object}", %{
         "bucket" => URI.encode(bucket, &URI.char_unreserved?/1),
-        "object" => URI.encode(object, &URI.char_unreserved?/1)
+        "object" => URI.encode(object, &(URI.char_unreserved?(&1) || &1 == ?/))
       })
       |> Request.add_optional_params(optional_params_config, optional_params)
       |> Request.library_version(@library_version)
@@ -445,7 +445,7 @@ defmodule GoogleApi.Storage.V1.Api.Objects do
       *   `:projection` (*type:* `String.t`) - Set of properties to return. Defaults to noAcl, unless the object resource specifies the acl property, when it defaults to full.
       *   `:provisionalUserProject` (*type:* `String.t`) - The project to be billed for this request if the target bucket is requester-pays bucket.
       *   `:userProject` (*type:* `String.t`) - The project to be billed for this request. Required for Requester Pays buckets.
-      *   `:body` (*type:* `GoogleApi.Storage.V1.Model.Object.t`) - 
+      *   `:body` (*type:* `GoogleApi.Storage.V1.Model.Object.t`) -
   *   `opts` (*type:* `keyword()`) - Call options
 
   ## Returns
@@ -618,7 +618,7 @@ defmodule GoogleApi.Storage.V1.Api.Objects do
       *   `:projection` (*type:* `String.t`) - Set of properties to return. Defaults to noAcl, unless the object resource specifies the acl property, when it defaults to full.
       *   `:provisionalUserProject` (*type:* `String.t`) - The project to be billed for this request if the target bucket is requester-pays bucket.
       *   `:userProject` (*type:* `String.t`) - The project to be billed for this request. Required for Requester Pays buckets.
-      *   `:body` (*type:* `GoogleApi.Storage.V1.Model.Object.t`) - 
+      *   `:body` (*type:* `GoogleApi.Storage.V1.Model.Object.t`) -
   *   `opts` (*type:* `keyword()`) - Call options
 
   ## Returns
@@ -872,7 +872,7 @@ defmodule GoogleApi.Storage.V1.Api.Objects do
       *   `:projection` (*type:* `String.t`) - Set of properties to return. Defaults to full.
       *   `:provisionalUserProject` (*type:* `String.t`) - The project to be billed for this request if the target bucket is requester-pays bucket.
       *   `:userProject` (*type:* `String.t`) - The project to be billed for this request, for Requester Pays buckets.
-      *   `:body` (*type:* `GoogleApi.Storage.V1.Model.Object.t`) - 
+      *   `:body` (*type:* `GoogleApi.Storage.V1.Model.Object.t`) -
   *   `opts` (*type:* `keyword()`) - Call options
 
   ## Returns
@@ -955,7 +955,7 @@ defmodule GoogleApi.Storage.V1.Api.Objects do
       *   `:rewriteToken` (*type:* `String.t`) - Include this field (from the previous rewrite response) on each rewrite request after the first one, until the rewrite response 'done' flag is true. Calls that provide a rewriteToken can omit all other request fields, but if included those fields must match the values provided in the first rewrite request.
       *   `:sourceGeneration` (*type:* `String.t`) - If present, selects a specific revision of the source object (as opposed to the latest version, the default).
       *   `:userProject` (*type:* `String.t`) - The project to be billed for this request. Required for Requester Pays buckets.
-      *   `:body` (*type:* `GoogleApi.Storage.V1.Model.Object.t`) - 
+      *   `:body` (*type:* `GoogleApi.Storage.V1.Model.Object.t`) -
   *   `opts` (*type:* `keyword()`) - Call options
 
   ## Returns
@@ -1052,7 +1052,7 @@ defmodule GoogleApi.Storage.V1.Api.Objects do
       *   `:generation` (*type:* `String.t`) - If present, selects a specific revision of this object (as opposed to the latest version, the default).
       *   `:provisionalUserProject` (*type:* `String.t`) - The project to be billed for this request if the target bucket is requester-pays bucket.
       *   `:userProject` (*type:* `String.t`) - The project to be billed for this request. Required for Requester Pays buckets.
-      *   `:body` (*type:* `GoogleApi.Storage.V1.Model.Policy.t`) - 
+      *   `:body` (*type:* `GoogleApi.Storage.V1.Model.Policy.t`) -
   *   `opts` (*type:* `keyword()`) - Call options
 
   ## Returns
@@ -1208,7 +1208,7 @@ defmodule GoogleApi.Storage.V1.Api.Objects do
       *   `:projection` (*type:* `String.t`) - Set of properties to return. Defaults to full.
       *   `:provisionalUserProject` (*type:* `String.t`) - The project to be billed for this request if the target bucket is requester-pays bucket.
       *   `:userProject` (*type:* `String.t`) - The project to be billed for this request. Required for Requester Pays buckets.
-      *   `:body` (*type:* `GoogleApi.Storage.V1.Model.Object.t`) - 
+      *   `:body` (*type:* `GoogleApi.Storage.V1.Model.Object.t`) -
   *   `opts` (*type:* `keyword()`) - Call options
 
   ## Returns
@@ -1283,7 +1283,7 @@ defmodule GoogleApi.Storage.V1.Api.Objects do
       *   `:startOffset` (*type:* `String.t`) - Filter results to objects whose names are lexicographically equal to or after startOffset. If endOffset is also set, the objects listed will have names between startOffset (inclusive) and endOffset (exclusive).
       *   `:userProject` (*type:* `String.t`) - The project to be billed for this request. Required for Requester Pays buckets.
       *   `:versions` (*type:* `boolean()`) - If true, lists all versions of an object as distinct results. The default is false. For more information, see Object Versioning.
-      *   `:resource` (*type:* `GoogleApi.Storage.V1.Model.Channel.t`) - 
+      *   `:resource` (*type:* `GoogleApi.Storage.V1.Model.Channel.t`) -
   *   `opts` (*type:* `keyword()`) - Call options
 
   ## Returns
